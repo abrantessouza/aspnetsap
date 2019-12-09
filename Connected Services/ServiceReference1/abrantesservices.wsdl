@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:n1="urn:sap-com:document:sap:rfc:functions" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>
+    <sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl" />
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+      <xsd:simpleType name="char10">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="10" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="cuky5">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="5" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="curr9.2">
+        <xsd:restriction base="xsd:decimal">
+          <xsd:totalDigits value="9" />
+          <xsd:fractionDigits value="2" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="date10">
+        <xsd:restriction base="xsd:string">
+          <xsd:maxLength value="10" />
+          <xsd:pattern value="\d\d\d\d-\d\d-\d\d" />
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:schema>
+    <xsd:schema xmlns:n0="urn:sap-com:document:sap:rfc:functions" attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:soap:functions:mc-style">
+      <xsd:import namespace="urn:sap-com:document:sap:rfc:functions" />
+      <xsd:complexType name="Zsamples">
+        <xsd:sequence>
+          <xsd:element name="RegId" type="xsd:int" />
+          <xsd:element name="Lote" type="n0:char10" />
+          <xsd:element name="CodProduto" type="n0:char10" />
+          <xsd:element name="IsSync" type="xsd:unsignedByte" />
+          <xsd:element name="DataSync" type="n0:date10" />
+          <xsd:element name="DataRegistro" type="n0:date10" />
+          <xsd:element name="QtdElements" type="xsd:int" />
+          <xsd:element name="PriceAnalysis" type="n0:curr9.2" />
+          <xsd:element name="Moeda" type="n0:cuky5" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Zsampledt">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="item" type="tns:Zsamples" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="ZRemotListsample">
+        <xsd:complexType>
+          <xsd:sequence />
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ZRemotListsampleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Out" type="tns:Zsampledt" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ZUpdateSyncSample">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Lote" type="n0:char10" />
+            <xsd:element name="RegId" type="xsd:int" />
+            <xsd:element name="Sync" type="xsd:unsignedByte" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ZUpdateSyncSampleResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Done" type="xsd:unsignedByte" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ZRemotListsample">
+    <wsdl:part name="parameters" element="tns:ZRemotListsample" />
+  </wsdl:message>
+  <wsdl:message name="ZRemotListsampleResponse">
+    <wsdl:part name="parameter" element="tns:ZRemotListsampleResponse" />
+  </wsdl:message>
+  <wsdl:message name="ZUpdateSyncSample">
+    <wsdl:part name="parameters" element="tns:ZUpdateSyncSample" />
+  </wsdl:message>
+  <wsdl:message name="ZUpdateSyncSampleResponse">
+    <wsdl:part name="parameter" element="tns:ZUpdateSyncSampleResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Z_ABRANTES_SERVICES">
+    <wsdl:operation name="ZRemotListsample">
+      <wsdl:input message="tns:ZRemotListsample" />
+      <wsdl:output message="tns:ZRemotListsampleResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="ZUpdateSyncSample">
+      <wsdl:input message="tns:ZUpdateSyncSample" />
+      <wsdl:output message="tns:ZUpdateSyncSampleResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AbrantesServices" type="tns:Z_ABRANTES_SERVICES">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ZRemotListsample">
+      <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_ABRANTES_SERVICES:ZRemotListsampleRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZUpdateSyncSample">
+      <soap:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_ABRANTES_SERVICES:ZUpdateSyncSampleRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AbrantesServices_soap12" type="tns:Z_ABRANTES_SERVICES">
+    <wsoap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ZRemotListsample">
+      <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_ABRANTES_SERVICES:ZRemotListsampleRequest" style="document" />
+      <wsdl:input>
+        <wsoap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsoap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZUpdateSyncSample">
+      <wsoap12:operation soapAction="urn:sap-com:document:sap:soap:functions:mc-style:Z_ABRANTES_SERVICES:ZUpdateSyncSampleRequest" style="document" />
+      <wsdl:input>
+        <wsoap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsoap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ZAbrantesServices">
+    <wsdl:port name="AbrantesServices" binding="tns:AbrantesServices">
+      <soap:address location="http://vhcalnplci:8000/sap/bc/srt/rfc/sap/z_abrantes_services/001/zabrantesservices/abrantesservices" />
+    </wsdl:port>
+    <wsdl:port name="AbrantesServices_soap12" binding="tns:AbrantesServices_soap12">
+      <wsoap12:address location="http://vhcalnplci:8000/sap/bc/srt/rfc/sap/z_abrantes_services/001/zabrantesservices/abrantesservices" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
